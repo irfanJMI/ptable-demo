@@ -1,0 +1,41 @@
+<p-table
+  [value]="customers()"
+  [columns]="cols"
+  [scrollable]="true"
+  scrollHeight="500px"
+  [rows]="50"
+  [virtualScroll]="true"
+  [virtualScrollItemSize]="46"
+  [lazy]="true"
+  [totalRecords]="totalRecords()"
+  [loading]="loading()"
+  (onLazyLoad)="loadCustomers($event)"
+  dataKey="id"
+>
+  <ng-template #header let-columns>
+    <tr>
+      @for (col of columns; track col.field) {
+        <th [pSortableColumn]="col.field" style="width: 25%">
+          {{ col.header }}
+          <p-sortIcon [field]="col.field" />
+        </th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-rowData let-columns="columns">
+    <tr style="height: 46px">
+      @for (col of columns; track col.field) {
+        <td>{{ rowData?.[col.field] }}</td>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #loadingbody let-columns="columns">
+    <tr style="height: 46px">
+      @for (col of columns; track col.field) {
+        <td><p-skeleton width="60%" /></td>
+      }
+    </tr>
+  </ng-template>
+</p-table>
