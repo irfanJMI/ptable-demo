@@ -2,3 +2,42 @@
 
 html, body { margin: 0; background: #f1f5f9; color: #0f172a;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+
+/* ---------------------------------------------------------------------------
+ * Always-visible vertical scrollbar on the p-table virtual scroll viewport.
+ * macOS (and some Linux/headless setups) use overlay scrollbars that are hidden
+ * until you scroll, so the 4.6M px scroll area looked like it had no scrollbar.
+ * The scroll viewport is the <p-scroller> inner div: .p-virtualscroller
+ * (the outer .p-datatable-table-container does not scroll itself).
+ * ------------------------------------------------------------------------- */
+.p-datatable-scrollable .p-virtualscroller {
+  overflow-y: scroll !important;
+}
+
+/* Chrome, Edge, Safari: custom ::-webkit-scrollbar is never an overlay scrollbar */
+.p-datatable-scrollable .p-virtualscroller::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.p-datatable-scrollable .p-virtualscroller::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 5px;
+}
+.p-datatable-scrollable .p-virtualscroller::-webkit-scrollbar-thumb {
+  background: #64748b;
+  border-radius: 5px;
+  border: 2px solid #e2e8f0;
+  min-height: 40px;
+}
+.p-datatable-scrollable .p-virtualscroller::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Firefox only. Chrome 121+ ignores ::-webkit-scrollbar when these standard
+   properties are set, so they are limited to Firefox here. */
+@supports (-moz-appearance: none) {
+  .p-datatable-scrollable .p-virtualscroller {
+    scrollbar-width: thin;
+    scrollbar-color: #64748b #e2e8f0;
+  }
+}
