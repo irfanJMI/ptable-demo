@@ -39,3 +39,8 @@
     </tr>
   </ng-template>
 </p-table>
+
+<p class="table-status">
+  Loaded {{ loadedCount() }} of {{ totalRecords() }} rows
+  @if (loading()) { · loading next page… }
+</p>

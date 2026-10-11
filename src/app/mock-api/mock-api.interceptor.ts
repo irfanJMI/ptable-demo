@@ -8,6 +8,13 @@ import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import type { Customer } from '../lazy-virtual-table/lazy-virtual-table.component';
 
+declare global {
+  interface Window {
+    /** Offsets of every /api/customers request, for testing only. */
+    __apiCalls?: number[];
+  }
+}
+
 const TOTAL = 100_000;
 const LATENCY_MS = 300;
 
@@ -78,6 +85,8 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   const limit = Math.max(0, Number(req.params.get('limit') ?? 50) || 50);
   const sortField = req.params.get('sortField');
   const sortOrder = Number(req.params.get('sortOrder') ?? 1) || 1;
+
+  (window.__apiCalls ??= []).push(offset); // testing only
 
   const all = getSorted(sortField, sortOrder);
   const body = { data: all.slice(offset, offset + limit), total: all.length };

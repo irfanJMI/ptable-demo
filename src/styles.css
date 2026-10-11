@@ -41,3 +41,5 @@ html, body { margin: 0; background: #f1f5f9; color: #0f172a;
     scrollbar-color: #64748b #e2e8f0;
   }
 }
+
+.table-status { margin: .75rem .25rem 0; color: #64748b; font-size: .875rem; }
